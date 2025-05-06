@@ -1,0 +1,126 @@
+/* 全局样式 */
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* 主容器样式 */
+#wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+/* 左侧菜单容器样式 */
+#sidebar-container {
+    width: 250px;
+    background-color: #343a40;
+    color: white;
+    transition: all 0.3s;
+    overflow-y: auto;
+}
+
+/* 右侧内容容器样式 */
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+/* 左侧菜单样式 */
+.sidebar-header {
+    padding: 20px;
+    background-color: #2c3136;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    margin-left: 10px;
+}
+
+.menu-list {
+    padding: 0;
+    list-style: none;
+}
+
+.menu-item {
+    padding: 12px 20px;
+    display: block;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #495057;
+}
+
+.menu-item.active {
+    background-color: #007bff;
+}
+
+.menu-icon {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    display: none;
+}
+
+.submenu.show {
+    display: block;
+}
+
+.submenu-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submenu-item:hover {
+    background-color: #495057;
+}
+
+.submenu-item.active {
+    background-color: #007bff;
+}
+
+/* 右侧内容区域样式 */
+.page-header {
+    margin-bottom: 20px;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.page-content {
+    padding: 0 20px 20px;
+}
+
+/* 按钮样式 */
+.toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* 折叠状态样式 */
+.collapsed {
+    width: 60px !important;
+}
+
+.collapsed .sidebar-header h3,
+.collapsed .menu-text {
+    display: none;
+}
+
+.collapsed .menu-item {
+    justify-content: center;
+}

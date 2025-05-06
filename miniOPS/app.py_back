@@ -1,0 +1,78 @@
+from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+import os
+
+app = Flask(__name__)
+
+# Specify the directory where your files are stored
+UPLOAD_FOLDER = 'upload'  # Replace with your actual folder path
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Route to list all files in the directory
+@app.route('/view')
+def index():
+    # List all files in the upload folder
+    try:
+        files = os.listdir(app.config['UPLOAD_FOLDER'])
+    except FileNotFoundError:
+        files = []
+    return render_template('index.html', files=files)
+
+@app.route('/listfile/<filename>')
+def list_file(filename):
+    # List all files in the upload folder
+    try:
+        files = os.listdir(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+    except FileNotFoundError:
+        files = []
+    return render_template('list.html', files=files, fileforder=filename)
+
+
+# Route to download a file
+@app.route('/download/<fileforder>/<filename>')
+def download_file(fileforder,filename):
+    # Serve the file from the upload folder
+    return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER'],fileforder), filename, as_attachment=True)
+
+
+# Secret key for session management
+app.secret_key = os.urandom(24)
+
+# Dummy user data (you can replace this with a real database)
+users = {
+    "admin": "admin123",  # username: password
+}
+
+
+# Route for the login page
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # Validate user credentials
+        if username in users and users[username] == password:
+            session['user'] = username  # Store user in session
+            flash('Login successful!', 'success')
+            return render_template('main.html')  # Redirect to the dashboard
+        else:
+            flash('Invalid username or password. Please try again.', 'error')
+
+    return render_template('login.html')
+
+# Route for the login page
+@app.route('/menu', methods=['GET', 'POST'])
+def initMenu():
+    return render_template('menu.html');
+
+# Route for the login page
+@app.route('/content', methods=['GET', 'POST'])
+def initContent():
+    return render_template('content.html');
+
+
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0")
